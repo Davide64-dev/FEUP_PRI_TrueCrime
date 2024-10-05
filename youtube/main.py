@@ -6,6 +6,22 @@ api_key = "AIzaSyCIYPIUDLfdWq7jkJc8hpfu2OSC4MNkMC8"
 
 youtube = build('youtube', 'v3', developerKey=api_key)
 
+def get_video_id(query):
+    youtube = build('youtube', 'v3', developerKey=api_key)
+    
+    search_response = youtube.search().list(
+        q=query,
+        part='snippet',
+        maxResults=1
+    ).execute()
+
+    for item in search_response['items']:
+        video_id = item['id'].get('videoId')
+        if video_id:
+            return video_id
+        
+    return ""
+
 def get_video_comments(video_id):
     comments = []
     response = youtube.commentThreads().list(
