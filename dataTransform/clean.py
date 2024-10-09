@@ -22,6 +22,10 @@ def clean_json(json_file_path):
             # If the description contains '_______', clean it
             if '_______' in description:
                 value['Description'] = remove_unwanted_text(description)
+        elif value.get('Channel') == 'JCS - Criminal Psychology':
+            # Remove everything after the first '\n' in the description
+            if '\n' in value.get('Description', ''):
+                value['Description'] = value.get('Description', '').split('\n')[0]
 
     # Write the updated data back to the JSON file
     with open(json_file_path, 'w', encoding='utf-8') as file:
