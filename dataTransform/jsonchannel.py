@@ -1,5 +1,3 @@
-# transforms true_crime.json to another json file where videos are grouped by channel
-
 import json
 import os
 
@@ -19,6 +17,9 @@ def group_by_channel(json_file_path):
         channel = value.get('Channel')
         if channel not in channel_data:
             channel_data[channel] = []
+        # Remove the 'Channel' and 'Month' keys from the value
+        value.pop('Channel', None)
+        value.pop('Month', None)
         channel_data[channel].append(value)
 
     # Write the grouped data to a new JSON file
