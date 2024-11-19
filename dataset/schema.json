@@ -1,0 +1,120 @@
+{
+  "add-field-type": [
+    {
+      "name": "channelName",
+      "class": "solr.TextField",
+      "indexAnalyzer": {
+        "tokenizer": {
+          "class": "solr.StandardTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          },
+          {
+            "class": "solr.ASCIIFoldingFilterFactory",
+            "preserveOriginal": true
+          }
+        ]
+      },
+      "queryAnalyzer": {
+        "tokenizer": {
+          "class": "solr.StandardTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          },
+          {
+            "class": "solr.ASCIIFoldingFilterFactory",
+            "preserveOriginal": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "titleName",
+      "class": "solr.TextField",
+      "indexAnalyzer": {
+        "tokenizer": {
+          "class": "solr.StandardTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          },
+          {
+            "class": "solr.ASCIIFoldingFilterFactory",
+            "preserveOriginal": true
+          }
+        ]
+      },
+      "queryAnalyzer": {
+        "tokenizer": {
+          "class": "solr.StandardTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          },
+          {
+            "class": "solr.ASCIIFoldingFilterFactory",
+            "preserveOriginal": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "publishedDateType",
+      "class": "solr.TrieDateField",
+      "indexAnalyzer" : {
+        "tokenizer": {
+          "class": "solr.StandardTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          },
+          {
+            "class": "solr.ASCIIFoldingFilterFactory",
+            "preserveOriginal": true
+          }
+        ]
+      },
+        "queryAnalyzer": {
+            "tokenizer": {
+            "class": "solr.StandardTokenizerFactory"
+            },
+            "filters": [
+            {
+                "class": "solr.LowerCaseFilterFactory"
+            },
+            {
+                "class": "solr.ASCIIFoldingFilterFactory",
+                "preserveOriginal": true
+            }
+            ]
+        }
+    },
+    {
+      "name": "numLikes",
+      "class": "solr.TrieIntField"
+    },
+    {
+      "name": "numComments",
+      "class": "solr.TrieIntField"
+    },
+    {
+      "name": "numViews",
+      "class": "solr.TrieIntField"
+    },
+  ],
+  "add-field": [
+    {
+      "name": "channelName",
+      "type": "channelName",
+      "multiValued": false,
+      "stored": true
+    }
+  ]
+}

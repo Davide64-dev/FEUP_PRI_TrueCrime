@@ -1,10 +1,15 @@
 import json
 
-# Function to safely convert strings to numeric values
+# Fixed safe_convert function
 def safe_convert(value, to_type=float, default=0):
     try:
+        if isinstance(value, to_type):
+            return value
+        if isinstance(value, str):
+            return to_type(value.replace(',', '').strip())
         return to_type(value)
-    except (ValueError, TypeError):
+    except (ValueError, TypeError, AttributeError):
+        print(f"Failed to convert value: {value}, defaulting to {default}")
         return default
 
 # Load the original JSON structure
@@ -23,10 +28,16 @@ for channel, videos in data.items():
             **video  # Merge the existing video data
         }
 
+        # Debugging: Log original values
+        print(f"Original Likes value: {flattened_entry.get('Likes')}")
+
         # Safely convert numeric fields
         flattened_entry["Views"] = safe_convert(flattened_entry.get("Views"), float)
-        flattened_entry["Likes"] = safe_convert(flattened_entry.get("Likes"), int)
-        flattened_entry["Comments"] = safe_convert(flattened_entry.get("Comments"), int)
+        flattened_entry["Likes"] = safe_convert(flattened_entry.get("Likes"), float)
+        flattened_entry["Comments"] = safe_convert(flattened_entry.get("Comments"), float)
+
+        # Debugging: Log converted values
+        print(f"Converted Likes value: {flattened_entry['Likes']}")
 
         flattened_data.append(flattened_entry)
 
