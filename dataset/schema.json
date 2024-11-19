@@ -66,35 +66,7 @@
     },
     {
       "name": "publishedDateType",
-      "class": "solr.TrieDateField",
-      "indexAnalyzer" : {
-        "tokenizer": {
-          "class": "solr.StandardTokenizerFactory"
-        },
-        "filters": [
-          {
-            "class": "solr.LowerCaseFilterFactory"
-          },
-          {
-            "class": "solr.ASCIIFoldingFilterFactory",
-            "preserveOriginal": true
-          }
-        ]
-      },
-        "queryAnalyzer": {
-            "tokenizer": {
-            "class": "solr.StandardTokenizerFactory"
-            },
-            "filters": [
-            {
-                "class": "solr.LowerCaseFilterFactory"
-            },
-            {
-                "class": "solr.ASCIIFoldingFilterFactory",
-                "preserveOriginal": true
-            }
-            ]
-        }
+      "class": "solr.TrieDateField"
     },
     {
       "name": "numLikes",
@@ -297,7 +269,7 @@
       "stored": true
     },
     {
-      "name": "id",
+      "name": "videoId",
       "type": "idTitle",
       "multiValued": false,
       "stored": true
