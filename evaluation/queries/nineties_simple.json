@@ -1,0 +1,10 @@
+{
+    "query": "[murder homicide 90s [1990 1999] (United AND States) America]",
+    "fields": ["Title", "videoId", "score"],
+    "params": {
+        "defType": "edismax",
+        "rows": 100,
+        "qf": "Title transcript Description",
+        "q.op": "OR"
+    }
+}

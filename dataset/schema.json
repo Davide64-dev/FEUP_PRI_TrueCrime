@@ -1,15 +1,25 @@
 {
   "add-field-type": [
     {
-      "name": "channelName",
+      "name": "text_general",
       "class": "solr.TextField",
       "indexAnalyzer": {
         "tokenizer": {
-          "class": "solr.StandardTokenizerFactory"
+          "class": "solr.WhitespaceTokenizerFactory"
         },
         "filters": [
           {
             "class": "solr.LowerCaseFilterFactory"
+          },
+          {
+            "class": "solr.StopFilterFactory",
+            "words": "stopwords.txt",
+            "ignoreCase": true
+          },
+          {
+            "class": "solr.SynonymFilterFactory",
+            "synonyms": "synonyms.txt",
+            "expand": true
           },
           {
             "class": "solr.ASCIIFoldingFilterFactory",
@@ -19,272 +29,123 @@
       },
       "queryAnalyzer": {
         "tokenizer": {
-          "class": "solr.StandardTokenizerFactory"
+          "class": "solr.WhitespaceTokenizerFactory"
         },
         "filters": [
           {
             "class": "solr.LowerCaseFilterFactory"
           },
           {
-            "class": "solr.ASCIIFoldingFilterFactory",
-            "preserveOriginal": true
+            "class": "solr.StopFilterFactory",
+            "words": "stopwords.txt",
+            "ignoreCase": true
+          },
+          {
+            "class": "solr.SynonymFilterFactory",
+            "synonyms": "synonyms.txt",
+            "expand": true
           }
         ]
       }
     },
     {
-      "name": "titleName",
-      "class": "solr.TextField",
-      "indexAnalyzer": {
-        "tokenizer": {
-          "class": "solr.StandardTokenizerFactory"
-        },
-        "filters": [
-          {
-            "class": "solr.LowerCaseFilterFactory"
-          },
-          {
-            "class": "solr.ASCIIFoldingFilterFactory",
-            "preserveOriginal": true
-          }
-        ]
-      },
-      "queryAnalyzer": {
-        "tokenizer": {
-          "class": "solr.StandardTokenizerFactory"
-        },
-        "filters": [
-          {
-            "class": "solr.LowerCaseFilterFactory"
-          },
-          {
-            "class": "solr.ASCIIFoldingFilterFactory",
-            "preserveOriginal": true
-          }
-        ]
-      }
-    },
-    {
-      "name": "publishedDateType",
+      "name": "date",
       "class": "solr.TrieDateField"
     },
     {
-      "name": "numLikes",
+      "name": "float",
       "class": "solr.TrieFloatField"
     },
     {
-      "name": "numComments",
-      "class": "solr.TrieFloatField"
-    },
-    {
-      "name": "numViews",
-      "class": "solr.TrieFloatField"
-    },
-    {
-      "name": "descriptionContent",
-      "class": "solr.TextField",
-      "indexAnalyzer": {
-        "tokenizer": {
-          "class": "solr.StandardTokenizerFactory"
-        },
-        "filters": [
-          {
-            "class": "solr.LowerCaseFilterFactory"
-          },
-          {
-            "class": "solr.ASCIIFoldingFilterFactory",
-            "preserveOriginal": true
-          }
-        ]
-      },
-      "queryAnalyzer": {
-        "tokenizer": {
-          "class": "solr.StandardTokenizerFactory"
-        },
-        "filters": [
-          {
-            "class": "solr.LowerCaseFilterFactory"
-          },
-          {
-            "class": "solr.ASCIIFoldingFilterFactory",
-            "preserveOriginal": true
-          }
-        ]
-      }
-    },
-    {
-      "name": "idTitle",
-      "class": "solr.TextField",
-      "indexAnalyzer": {
-        "tokenizer": {
-          "class": "solr.StandardTokenizerFactory"
-        },
-        "filters": [
-          {
-            "class": "solr.LowerCaseFilterFactory"
-          },
-          {
-            "class": "solr.ASCIIFoldingFilterFactory",
-            "preserveOriginal": true
-          }
-        ]
-      },
-      "queryAnalyzer": {
-        "tokenizer": {
-          "class": "solr.StandardTokenizerFactory"
-        },
-        "filters": [
-          {
-            "class": "solr.LowerCaseFilterFactory"
-          },
-          {
-            "class": "solr.ASCIIFoldingFilterFactory",
-            "preserveOriginal": true
-          }
-        ]
-      }
-    },
-    {
-      "name": "transcriptContent",
-      "class": "solr.TextField",
-      "indexAnalyzer": {
-        "tokenizer": {
-          "class": "solr.StandardTokenizerFactory"
-        },
-        "filters": [
-          {
-            "class": "solr.LowerCaseFilterFactory"
-          },
-          {
-            "class": "solr.ASCIIFoldingFilterFactory",
-            "preserveOriginal": true
-          }
-        ]
-      },
-      "queryAnalyzer": {
-        "tokenizer": {
-          "class": "solr.StandardTokenizerFactory"
-        },
-        "filters": [
-          {
-            "class": "solr.LowerCaseFilterFactory"
-          },
-          {
-            "class": "solr.ASCIIFoldingFilterFactory",
-            "preserveOriginal": true
-          }
-        ]
-      }
-    },
-    {
-      "name": "commentsContent",
-      "class": "solr.TextField",
-      "indexAnalyzer": {
-        "tokenizer": {
-          "class": "solr.StandardTokenizerFactory"
-        },
-        "filters": [
-          {
-            "class": "solr.LowerCaseFilterFactory"
-          },
-          {
-            "class": "solr.ASCIIFoldingFilterFactory",
-            "preserveOriginal": true
-          }
-        ]
-      },
-      "queryAnalyzer": {
-        "tokenizer": {
-          "class": "solr.StandardTokenizerFactory"
-        },
-        "filters": [
-          {
-            "class": "solr.LowerCaseFilterFactory"
-          },
-          {
-            "class": "solr.ASCIIFoldingFilterFactory",
-            "preserveOriginal": true
-          }
-        ]
-      },
-      "nested": {
-        "fields": [
-          {
-            "name": "comment",
-            "type": "solr.TextField",
-            "multiValued": false,
-            "stored": true
-          },
-          {
-            "name": "replies",
-            "type": "solr.TextField",
-            "multiValued": true,
-            "stored": true
-          }
-        ]
-      }
+      "name": "string",
+      "class": "solr.StrField"
     }
   ],
   "add-field": [
     {
       "name": "Channel",
-      "type": "channelName",
+      "type": "string",
       "multiValued": false,
-      "stored": true
+      "stored": true,
+      "indexed": true
     },
     {
       "name": "Title",
-      "type": "titleName",
+      "type": "text_general",
       "multiValued": false,
-      "stored": true
+      "stored": true,
+      "indexed": true
     },
     {
       "name": "PublishedDate",
-      "type": "publishedDateType",
+      "type": "date",
       "multiValued": false,
-      "stored": true
+      "stored": true,
+      "indexed": true
     },
     {
       "name": "Views",
-      "type": "numViews",
+      "type": "float",
       "multiValued": false,
-      "stored": true
+      "stored": true,
+      "indexed": true
     },
     {
       "name": "Likes",
-      "type": "numLikes",
+      "type": "float",
       "multiValued": false,
-      "stored": true
+      "stored": true,
+      "indexed": true
     },
     {
       "name": "Comments",
-      "type": "numComments",
+      "type": "float",
       "multiValued": false,
-      "stored": true
+      "stored": true,
+      "indexed": true
     },
     {
       "name": "Description",
-      "type": "descriptionContent",
+      "type": "text_general",
       "multiValued": false,
-      "stored": true
+      "stored": true,
+      "indexed": true
     },
     {
       "name": "videoId",
-      "type": "idTitle",
+      "type": "string",
       "multiValued": false,
-      "stored": true
+      "stored": true,
+      "indexed": true
     },
     {
       "name": "transcript",
-      "type": "transcriptContent",
+      "type": "text_general",
       "multiValued": false,
-      "stored": true
+      "stored": true,
+      "indexed": true
     },
     {
       "name": "comments",
-      "type": "commentsContent",
+      "type": "text_general",
       "multiValued": true,
-      "stored": true
+      "stored": true,
+      "indexed": true
+    }
+  ],
+  "add-dynamic-field": [
+    {
+      "name": "attr_*",
+      "type": "string",
+      "multiValued": true,
+      "stored": true,
+      "indexed": true
+    }
+  ],
+  "add-copy-field": [
+    {
+      "source": ["Title", "Description", "transcript"],
+      "dest": "all_text"
     }
   ]
 }
