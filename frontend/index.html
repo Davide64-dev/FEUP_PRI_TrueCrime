@@ -3,18 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solr Search</title>
+    <title>True Crime Videos Search</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <h1>Search Document</h1>
-    <form id="searchForm">
-        <input type="text" id="query" placeholder="Enter search query" required>
-        <button type="submit">Search</button>
-    </form>
 
-    <div id="results"></div>
+<body>
+    <div class="container">  
+        <main class="main-content">
+            
+            <div class="header">
+                <div class="sidebar">
+                    <h2>Sort Options</h2>
+                    <button class="sort-button" onclick="sortResults('Views')">Sort by Views</button>
+                    <button class="sort-button" onclick="sortResults('Likes')">Sort by Likes</button>
+                </div>
+
+                <div class="searchBar">
+                    <h1>Search Video</h1>
+                    <form id="searchForm">
+                        <input type="text" id="query" placeholder="Enter search query" required>
+                        <button type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="results"></div>
+        </main>
+    </div>
 
     <script src="script.js"></script>
-    <link rel="stylesheet" href="style.css">
 </body>
+
 </html>
