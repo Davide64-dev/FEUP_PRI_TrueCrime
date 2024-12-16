@@ -59,7 +59,15 @@
     {
       "name": "string",
       "class": "solr.StrField"
+    },
+    {
+      "name": "crimeVector",
+      "class": "solr.DenseVectorField",
+      "vectorDimension": 384,
+      "similarityFunction": "cosine",
+      "knnAlgorithm": "hnsw"
     }
+
   ],
   "add-field": [
     {
@@ -131,6 +139,12 @@
       "multiValued": true,
       "stored": true,
       "indexed": true
+    },
+    {
+      "name": "vector",
+      "type": "crimeVector",
+      "indexed": true,
+      "stored": true
     }
   ],
   "add-dynamic-field": [
