@@ -61,19 +61,29 @@ function displayResults(results) {
         const listItem = document.createElement('li');
         listItem.innerHTML = `
             <div class="video-item">
-                <img src="https://img.youtube.com/vi/${result.videoId}/0.jpg" alt="${result.Title || 'Video'} Thumbnail" class="video-thumbnail">
+                <iframe class="video-video"
+                    width="300" 
+                    height="200" 
+                    src="https://www.youtube.com/embed/${result.videoId}" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
                 <div class="video-info">
-                    <p><strong>Title:</strong> ${result.Title || 'N/A'}</p>
-                    <p><strong>Views:</strong> ${result.Views || 'N/A'}</p>
-                    <p><strong>Likes:</strong> ${result.Likes || 'N/A'}</p>
-                    <p><strong>Link:</strong> <a href="https://www.youtube.com/watch?v=${result.videoId}" target="_blank">https://www.youtube.com/watch?v=${result.videoId}</a></p>
+                    <p>${result.Title || 'N/A'}</p>
+                    <p><img src="imgs/icon-views.png" class="icon"> ${result.Views || 'N/A'}</p>
+                    <p><img src="imgs/icon-like.png" class="icon"> ${result.Likes || 'N/A'}</p>
                 </div>
             </div>
         `;
         list.appendChild(listItem);
     });
+
     resultsDiv.appendChild(list);
 }
+
+
+
 
 function sortResults(field) {
     const resultsDiv = document.getElementById('results');
