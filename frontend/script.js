@@ -36,18 +36,19 @@ function buildDynamicQuery(userInput) {
 }
 
 function fetchSolrResults(query, isRawQuery) {
-    const url = `http://localhost:8983/solr/true_crime/select?${isRawQuery ? 'q' : 'q'}=${encodeURIComponent(query)}&wt=json`;
+    const url = `http://localhost:8983/solr/true_crime/select?${isRawQuery ? 'q' : 'q'}=${encodeURIComponent(query)}&hl=true&hl.fl=Description,transcript&hl.simple.pre=<mark>&hl.simple.post=</mark>&wt=json`;
 
     fetch(url)
         .then(response => response.json())
         .then(data => {
             const results = data.response.docs;
-            displayResults(results);
+            const highlights = data.highlighting; // Get the highlighting section
+            displayResults(results, highlights);
         })
         .catch(error => console.error('Error fetching Solr results:', error));
 }
 
-function displayResults(results) {
+function displayResults(results, highlights) {
     const resultsDiv = document.getElementById('results');
     resultsDiv.innerHTML = '';
 
@@ -57,7 +58,13 @@ function displayResults(results) {
     }
 
     const list = document.createElement('ul');
+
     results.forEach(result => {
+
+        const highlight = highlights[result.id] || {};
+        let descriptionSnippet = highlight.Description ? extractContext(highlight.Description[0]) : 'No relevant description found.';
+        let transcriptSnippet = highlight.transcript ? extractContext(highlight.transcript[0]) : 'No relevant transcript snippet found.';
+
         const listItem = document.createElement('li');
         listItem.innerHTML = `
             <div class="video-item">
@@ -70,7 +77,9 @@ function displayResults(results) {
                     allowfullscreen>
                 </iframe>
                 <div class="video-info">
-                    <p>${result.Title || 'N/A'}</p>
+                    <h3><strong>${result.Title || 'N/A'}</strong></h3>
+                    <p><strong>Description Snippet:</strong> ${descriptionSnippet}</p>
+                    <p><strong>Transcript Snippet:</strong> ${transcriptSnippet}</p>
                     <p><img src="imgs/icon-views.png" class="icon"> ${result.Views || 'N/A'}</p>
                     <p><img src="imgs/icon-like.png" class="icon"> ${result.Likes || 'N/A'}</p>
                 </div>
@@ -82,8 +91,28 @@ function displayResults(results) {
     resultsDiv.appendChild(list);
 }
 
+function extractContext(snippet, preTag = "<mark>", postTag = "</mark>", contextSize = 5) {
+    const regex = new RegExp(`${preTag}(.*?)${postTag}`, "g");
+    let match = regex.exec(snippet);
 
+    if (match) {
+        const highlightedText = match[1]; // The highlighted word/phrase
+        const words = snippet.replace(/<[^>]+>/g, "").split(/\s+/); // Strip HTML tags and split into words
+        const matchIndex = words.indexOf(highlightedText);
 
+        if (matchIndex !== -1) {
+            const start = Math.max(0, matchIndex - contextSize);
+            const end = Math.min(words.length, matchIndex + contextSize + 1);
+            const before = start > 0 ? "(...)" : ""; // Add "(...)" if there are words before the snippet
+            const after = end < words.length ? "(...)" : ""; // Add "(...)" if there are words after the snippet
+            const snippetWords = words.slice(start, end).join(" ");
+            return `${before} ${snippetWords.replace(highlightedText, `${preTag}${highlightedText}${postTag}`)} ${after}`;
+        }
+    }
+
+    // Return the original snippet with "(...)" on both ends if no match
+    return `(...) ${snippet} (...)`;
+}
 
 function sortResults(field) {
     const resultsDiv = document.getElementById('results');
