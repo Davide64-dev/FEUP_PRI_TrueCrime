@@ -67,24 +67,24 @@ function displayResults(results, highlights) {
 
         const listItem = document.createElement('li');
         listItem.innerHTML = `
-            <div class="video-item">
-                <iframe class="video-video"
-                    width="300" 
-                    height="200" 
-                    src="https://www.youtube.com/embed/${result.videoId}" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
-                </iframe>
-                <div class="video-info">
-                    <h3><strong>${result.Title || 'N/A'}</strong></h3>
-                    <p><strong>Description Snippet:</strong> ${descriptionSnippet}</p>
-                    <p><strong>Transcript Snippet:</strong> ${transcriptSnippet}</p>
-                    <p><img src="imgs/icon-views.png" class="icon"> ${result.Views || 'N/A'}</p>
-                    <p><img src="imgs/icon-likes.png" class="icon"> ${result.Likes || 'N/A'}</p>
-                </div>
+        <div class="video-item">
+            <iframe class="video-video"
+                width="300" 
+                height="200" 
+                src="https://www.youtube.com/embed/${result.videoId}" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+            </iframe>
+            <div class="video-info">
+                <h3><strong>${result.Title || 'N/A'}</strong></h3>
+                <p><strong>Description Snippet:</strong> ${descriptionSnippet}</p>
+                <p><strong>Transcript Snippet:</strong> ${transcriptSnippet}</p>
+                <p><img src="imgs/icon-views.png" class="icon"> ${formatNumberWithSpaces(result.Views || 0)}</p>
+                <p><img src="imgs/icon-likes.png" class="icon"> ${formatNumberWithSpaces(result.Likes || 0)}</p>
             </div>
-        `;
+        </div>
+    `;    
         list.appendChild(listItem);
     });
 
@@ -151,4 +151,8 @@ function parseFieldValue(listItem, field) {
 
     console.warn(`Field paragraph for ${field} not found`);
     return 0;
+}
+
+function formatNumberWithSpaces(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 }
