@@ -22,10 +22,11 @@ def save_results(lines, file_path):
         file.writelines(lines)
 
 if __name__ == "__main__":
-    file_path = 'results_trec_murders.txt'
+    file_paths = ['results_trec_murders.txt']
     
-    lines = read_results(file_path)
-    unique_lines = remove_duplicates(lines)
-    save_results(unique_lines, file_path)
-    
-    print(f"Removed duplicates and saved {len(unique_lines)} unique lines back to {file_path}")
+    for file_path in file_paths:
+        lines = read_results(file_path)
+        unique_lines = remove_duplicates(lines)
+        save_results(unique_lines, file_path)
+        
+        print(f"Removed duplicates and saved {len(unique_lines)} unique lines back to {file_path}")

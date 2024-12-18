@@ -16,10 +16,13 @@ def save_video_ids(video_ids, output_file):
             file.write(video_id + '\n')
 
 if __name__ == "__main__":
-    input_file = 'murders_qrels.txt'
-    output_file = 'murders_qrels1.txt'
-    
-    video_ids = extract_video_ids(input_file)
-    save_video_ids(video_ids, output_file)
-    
-    print(f"Extracted {len(video_ids)} video IDs and saved to {output_file}")
+
+    input_files = ['murders_qrels.txt']
+    output_files = ['murders_qrels1.txt']
+
+    for input_file, output_file in zip(input_files, output_files):
+        
+        video_ids = extract_video_ids(input_file)
+        save_video_ids(video_ids, output_file)
+        
+        print(f"Extracted {len(video_ids)} video IDs and saved to {output_file}")
