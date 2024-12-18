@@ -81,7 +81,7 @@ function displayResults(results, highlights) {
                     <p><strong>Description Snippet:</strong> ${descriptionSnippet}</p>
                     <p><strong>Transcript Snippet:</strong> ${transcriptSnippet}</p>
                     <p><img src="imgs/icon-views.png" class="icon"> ${result.Views || 'N/A'}</p>
-                    <p><img src="imgs/icon-like.png" class="icon"> ${result.Likes || 'N/A'}</p>
+                    <p><img src="imgs/icon-likes.png" class="icon"> ${result.Likes || 'N/A'}</p>
                 </div>
             </div>
         `;
@@ -118,10 +118,15 @@ function sortResults(field) {
     const resultsDiv = document.getElementById('results');
     const listItems = Array.from(resultsDiv.querySelectorAll('li'));
 
+    console.log(listItems)
+
+    console.log(field)
+
     listItems.sort((a, b) => {
         const aValue = parseFieldValue(a, field);
         const bValue = parseFieldValue(b, field);
-        return bValue - aValue; // Sort in descending order
+        console.log()
+        return bValue - aValue;
     });
 
     const sortedList = document.createElement('ul');
@@ -131,13 +136,19 @@ function sortResults(field) {
     resultsDiv.appendChild(sortedList);
 }
 
-// Helper function to extract numeric values for the given field
 function parseFieldValue(listItem, field) {
-    const paragraphs = Array.from(listItem.querySelectorAll('p'));
-    const fieldParagraph = paragraphs.find(p => p.textContent.includes(field + ':'));
+    const fieldLower = field.toLowerCase();
+
+    const fieldParagraph = Array.from(listItem.querySelectorAll('p')).find(p =>
+        p.querySelector(`img[src*="icon-${fieldLower}"]`)
+    );
+
     if (fieldParagraph) {
-        const fieldValue = parseInt(fieldParagraph.textContent.split(': ')[1]) || 0;
-        return fieldValue;
+        const fieldValueText = fieldParagraph.textContent || '';
+        const numericValue = parseInt(fieldValueText.replace(/\D+/g, ''), 10);
+        return isNaN(numericValue) ? 0 : numericValue;
     }
+
+    console.warn(`Field paragraph for ${field} not found`);
     return 0;
 }
