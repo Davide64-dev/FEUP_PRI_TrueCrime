@@ -1,0 +1,146 @@
+{
+  "add-field-type": [
+    {
+      "name": "imp_text_general",
+      "class": "solr.TextField",
+      "indexAnalyzer": {
+        "tokenizer": {
+          "class": "solr.WhitespaceTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          },
+          {
+            "class": "solr.StopFilterFactory",
+            "words": "stopwords.txt",
+            "ignoreCase": true
+          },
+          {
+            "class": "solr.SynonymFilterFactory",
+            "synonyms": "synonyms.txt",
+            "expand": true
+          },
+          {
+            "class": "solr.ASCIIFoldingFilterFactory",
+            "preserveOriginal": true
+          }
+        ]
+      },
+      "queryAnalyzer": {
+        "tokenizer": {
+          "class": "solr.WhitespaceTokenizerFactory"
+        },
+        "filters": [
+          {
+            "class": "solr.LowerCaseFilterFactory"
+          },
+          {
+            "class": "solr.StopFilterFactory",
+            "words": "stopwords.txt",
+            "ignoreCase": true
+          },
+          {
+            "class": "solr.SynonymFilterFactory",
+            "synonyms": "synonyms.txt",
+            "expand": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "date",
+      "class": "solr.TextField"
+    },
+    {
+      "name": "float",
+      "class": "solr.TrieFloatField"
+    },
+    {
+      "name": "crimeVector",
+      "class": "solr.DenseVectorField",
+      "vectorDimension": 384,
+      "similarityFunction": "cosine",
+      "knnAlgorithm": "hnsw"
+    }
+
+  ],
+  "add-field": [
+    {
+      "name": "Channel",
+      "type": "string",
+      "multiValued": false,
+      "stored": true,
+      "indexed": true
+    },
+    {
+      "name": "Title",
+      "type": "imp_text_general",
+      "multiValued": false,
+      "stored": true,
+      "indexed": true
+    },
+    {
+      "name": "PublishedDate",
+      "type": "date",
+      "multiValued": false,
+      "stored": true,
+      "indexed": true
+    },
+    {
+      "name": "Views",
+      "type": "float",
+      "multiValued": false,
+      "stored": true,
+      "indexed": true
+    },
+    {
+      "name": "Likes",
+      "type": "float",
+      "multiValued": false,
+      "stored": true,
+      "indexed": true
+    },
+    {
+      "name": "Comments",
+      "type": "float",
+      "multiValued": false,
+      "stored": true,
+      "indexed": true
+    },
+    {
+      "name": "Description",
+      "type": "imp_text_general",
+      "multiValued": false,
+      "stored": true,
+      "indexed": true
+    },
+    {
+      "name": "videoId",
+      "type": "string",
+      "multiValued": false,
+      "stored": true,
+      "indexed": true
+    },
+    {
+      "name": "transcript",
+      "type": "imp_text_general",
+      "multiValued": false,
+      "stored": true,
+      "indexed": true
+    },
+    {
+      "name": "comments",
+      "type": "imp_text_general",
+      "multiValued": true,
+      "stored": true,
+      "indexed": true
+    },
+    {
+      "name": "vector",
+      "type": "crimeVector",
+      "indexed": true,
+      "stored": true
+    }
+  ]
+}

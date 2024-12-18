@@ -1,9 +1,9 @@
 {
-    "query": "[unsolved mystery]",
+    "query": "unsolved mystery",
     "fields": ["Title", "videoId", "score"],
     "params": {
         "defType": "edismax",
-        "rows": 3,
+        "rows": 100,
         "qf": "Title^3.0 transcript^1.0 Description",
         "q.op": "OR"
     }

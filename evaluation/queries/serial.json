@@ -1,9 +1,9 @@
 {
-    "query": "[(serial AND killer) California CA]",
+    "query": "(serial AND killer) California CA",
     "fields": ["Title", "videoId", "score"],
     "params": {
         "defType": "edismax",
-        "rows": 3,
+        "rows": 100,
         "qf": "Title^3.0 transcript^1.0 Description",
         "q.op": "OR"
     }

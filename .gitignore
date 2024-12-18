@@ -1,3 +1,8 @@
 .idea/
 config.json
 dataset/true_crime_semantics.json
+dataset/true_crime_semantics_with_id.json
+command.md
+evaluation/results/*
+evaluation/eval_output/*
+evaluation/graphs/*

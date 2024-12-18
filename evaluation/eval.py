@@ -100,19 +100,43 @@ def plot_results(results_path, qrels_path, output_path):
 
 if __name__ == "__main__":
     ## paths to queries
-    query_paths = ['queries/murder.json']
+    query_paths = ['queries/murder.json',
+                   'queries/nineties.json',
+                   'queries/serial.json',
+                   'queries/unsolved.json'
+                   ]
+    
+    query_simple_paths = ['queries/murder_simple.json',
+                          'queries/nineties_simple.json',
+                          'queries/serial_simple.json',
+                          'queries/unsolved_simple.json'
+                         ]
+    
+    # query_paths = query_simple_paths
 
     ## paths to queries results
-    query_results_paths = ['results/results_trec_murders.txt']
+    query_results_paths = ['results/results_trec_murders.txt',
+                           'results/results_trec_nineties.txt',
+                           'results/results_trec_serial.txt',
+                           'results/results_trec_unsolved.txt']
 
     ## path to qrels in trec format
-    qrels_trec_paths = ['qrels_trec/qrels_trec_murders.txt']
+    qrels_trec_paths = ['qrels_trec/qrels_trec_murders.txt',
+                        'qrels_trec/qrels_trec_nineties.txt',
+                        'qrels_trec/qrels_trec_serial.txt',
+                        'qrels_trec/qrels_trec_unsolved.txt']
 
     ## path to output of trec_eval
-    eval_output_paths = ['eval_output/eval_output_murders.txt']
+    eval_output_paths = ['eval_output/eval_output_murders.txt',
+                         'eval_output/eval_output_nineties.txt',
+                         'eval_output/eval_output_serial.txt',
+                         'eval_output/eval_output_unsolved.txt']
 
     ## path to output of graphs
-    plot_output_paths = ['graphs/murders.png']
+    plot_output_paths = ['graphs/murders.png',
+                         'graphs/nineties.png',
+                         'graphs/serial.png',
+                         'graphs/unsolved.png']
 
     for query_path, query_results_path, qrels_trec_path, eval_output_path, plot_output_path in zip(query_paths, query_results_paths, qrels_trec_paths, eval_output_paths, plot_output_paths):
         query_solr(query_path, query_results_path)
